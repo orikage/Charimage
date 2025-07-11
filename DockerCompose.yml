@@ -1,0 +1,16 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development # Dockerfileのdevelopmentステージを使用
+    ports:
+      - "5173:5173" # ローカルの5173ポートとコンテナの5173ポートをマッピング
+    volumes:
+      - .:/app # ホストの現在ディレクトリをコンテナの/appにマウント（ホットリロードのため）
+      - /app/node_modules # node_modulesはホストからマウントせず、コンテナ内で管理
+    # 開発サーバーを自動起動
+    command: npm run dev

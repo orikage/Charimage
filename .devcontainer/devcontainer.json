@@ -1,0 +1,35 @@
+// .devcontainer/devcontainer.json
+{
+    "name": "CoC7 CharSheet App Development",
+    "build": {
+        "dockerfile": "../Dockerfile", // プロジェクトルートのDockerfileを指定
+        "target": "development"        // Dockerfile内の'development'ステージを使用
+    },
+    "workspaceFolder": "/app", // コンテナ内でVS Codeが開くディレクトリ
+    
+    // コンテナ内で開くポート
+    "forwardPorts": [5173],
+
+    // VS Code拡張機能（推奨）
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "esbenp.prettier-vscode", // コードフォーマッター
+                "dbaeumer.vscode-eslint", // ESLint
+                "ms-vscode.vscode-typescript-next", // TypeScript/JavaScript IntelliSense
+                "formulahendry.auto-rename-tag", // HTML/JSXタグ自動リネーム
+                "humao.rest-client" // APIテストなど（必要であれば）
+            ]
+        }
+    },
+
+    // コンテナ起動後に実行するコマンド
+    "postCreateCommand": "npm install",
+
+    // コンテナ起動後に自動的に実行するコマンド
+    // この場合、npm run devで開発サーバーを起動
+    "postStartCommand": "npm run dev",
+
+    // コンテナ内でユーザーとして実行するコマンド
+    // "remoteUser": "node" // オプション: デフォルトはrootだが、nodeユーザーを使用することも可能
+}
