@@ -35,6 +35,17 @@ jobs:
         run: ls -R # List all files recursively
         working-directory: ./my-coc7-charsheet-app # Check inside the app directory
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # dist フォルダーのアップロード
+          path: './my-coc7-charsheet-app/dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
