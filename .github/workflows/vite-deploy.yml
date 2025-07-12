@@ -1,0 +1,33 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # mainブランチにプッシュされたときに実行
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest # Ubuntu環境で実行
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3 # リポジトリをチェックアウト
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' # Node.jsのバージョンを指定
+
+      - name: Install dependencies
+        run: npm install # 依存関係をインストール
+        working-directory: ./my-coc7-charsheet-app # my-coc7-charsheet-appディレクトリで実行
+
+      - name: Build project
+        run: npm run build # プロジェクトをビルド
+        working-directory: ./my-coc7-charsheet-app # my-coc7-charsheet-appディレクトリで実行
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} # GitHubトークンを使用
+          publish_dir: ./my-coc7-charsheet-app/dist # ビルド成果物のディレクトリを指定
