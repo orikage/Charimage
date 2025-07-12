@@ -5,6 +5,11 @@ on:
     branches:
       - main # mainブランチにプッシュされたときに実行
 
+permissions: # Add permissions block here
+  contents: write # Grant write permission for contents
+  pages: write # Grant write permission for pages (recommended for GitHub Pages)
+  id-token: write # Grant write permission for id-token (for OIDC, good practice)
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest # Ubuntu環境で実行
@@ -25,6 +30,10 @@ jobs:
       - name: Build project
         run: npm run build # プロジェクトをビルド
         working-directory: ./my-coc7-charsheet-app # my-coc7-charsheet-appディレクトリで実行
+
+      - name: List files after build # Add this step for debugging
+        run: ls -R # List all files recursively
+        working-directory: ./my-coc7-charsheet-app # Check inside the app directory
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
