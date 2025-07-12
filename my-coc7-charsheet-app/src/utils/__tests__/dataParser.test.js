@@ -1,0 +1,137 @@
+import { parseCharacterSheet } from '../dataParser';
+
+describe('parseCharacterSheet', () => {
+  // 共通の期待値ベース
+  const baseExpected = {
+    backstory: '',
+    beliefs: '',
+    equipment: '',
+    injuries: '',
+    insanity: '',
+    meaningfulLocations: '',
+    occupation: '',
+    significantPeople: '',
+    traits: '',
+    treasuredPossessions: '',
+    weapons: [],
+  };
+
+  it('should correctly parse basic character information from text', () => {
+    const text = `
+      キャラクター名：テストキャラ
+      PL名：テストプレイヤー
+    `;
+    const expected = {
+      ...baseExpected,
+      name: 'テストキャラ',
+      plName: 'テストプレイヤー',
+      attributes: {},
+      skills: [],
+    };
+    expect(parseCharacterSheet(text)).toEqual(expected);
+  });
+
+  it('should correctly parse attributes from text', () => {
+    const text = `
+      キャラクター名：ダミー
+      STR: 60
+      CON: 50
+      POW: 70
+      DEX: 80
+      APP: 90
+      SIZ: 40
+      INT: 75
+      EDU: 65
+    `;
+    const expected = {
+      ...baseExpected,
+      name: 'ダミー',
+      plName: '',
+      attributes: {
+        STR: 60,
+        CON: 50,
+        POW: 70,
+        DEX: 80,
+        APP: 90,
+        SIZ: 40,
+        INT: 75,
+        EDU: 65,
+      },
+      skills: [],
+    };
+    expect(parseCharacterSheet(text)).toEqual(expected);
+  });
+
+  it('should correctly parse skills from text', () => {
+    const text = `
+      キャラクター名：ダミー
+      技能：
+      言いくるめ: 65
+      回避: 70
+      目星: 50
+      聞き耳: 45
+      図書館: 30
+      運転（自動車）: 20
+      信用: 15
+      心理学: 10
+      医学: 5
+      歴史: 1
+    `;
+    const expected = {
+      ...baseExpected,
+      name: 'ダミー',
+      plName: '',
+      attributes: {},
+      skills: [
+        { name: '言いくるめ', value: 65 },
+        { name: '回避', value: 70 },
+        { name: '目星', value: 50 },
+        { name: '聞き耳', value: 45 },
+        { name: '図書館', value: 30 },
+        { name: '運転（自動車）', value: 20 },
+        { name: '信用', value: 15 },
+        { name: '心理学', value: 10 },
+        { name: '医学', value: 5 },
+        { name: '歴史', value: 1 },
+      ],
+    };
+    expect(parseCharacterSheet(text)).toEqual(expected);
+  });
+
+  it('should throw an error if character name is missing in text', () => {
+    const text = `
+      PL名：テストプレイヤー
+      STR: 60
+    `;
+    expect(() => parseCharacterSheet(text)).toThrow('キャラクター名が見つかりません。テキスト形式を確認してください。');
+  });
+
+  it('should correctly parse JSON character information', () => {
+    const jsonText = `{"kind":"character","data":{"name":"天乃 天(アマノ アメ)","plName":"テストPL"}}`;
+    const expected = {
+      ...baseExpected,
+      name: '天乃 天(アマノ アメ)',
+      plName: 'テストPL',
+      attributes: {},
+      skills: [],
+    };
+    expect(parseCharacterSheet(jsonText)).toEqual(expected);
+  });
+
+  it('should throw an error if character name is missing in JSON', () => {
+    const jsonText = `{"kind":"character","data":{"initiative":60}}`;
+    expect(() => parseCharacterSheet(jsonText)).toThrow('JSONデータにキャラクター名が見つかりません。');
+  });
+
+  it('should fall back to text parsing if JSON is invalid', () => {
+    const invalidJsonText = `これはJSONではないテキストです。キャラクター名：テスト`;
+    const expected = {
+      ...baseExpected,
+      name: 'テスト',
+      plName: '',
+      attributes: {},
+      skills: [],
+    };
+    expect(parseCharacterSheet(invalidJsonText)).toEqual(expected);
+  });
+});
