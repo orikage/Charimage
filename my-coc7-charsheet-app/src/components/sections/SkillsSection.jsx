@@ -40,5 +40,3 @@ const SkillsSection = ({ skills }) => {
 };
 
 export default SkillsSection;
-
-export default SkillsSection;

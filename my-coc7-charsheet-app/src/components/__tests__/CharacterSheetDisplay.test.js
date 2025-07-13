@@ -37,9 +37,12 @@ describe('<CharacterSheetDisplay />', () => {
     expect(screen.getByRole('heading', { name: 'テストキャラ' })).toBeInTheDocument();
     expect(screen.getByText('PL: テストPL')).toBeInTheDocument();
     expect(screen.getByText('テスト職業')).toBeInTheDocument();
-    expect(screen.getByText('STR: 80')).toBeInTheDocument();
-    expect(screen.getByText('図書館: 75%')).toBeInTheDocument();
-    expect(screen.getByText('ショットガン (4d6)')).toBeInTheDocument();
+    expect(screen.getByText('STR')).toBeInTheDocument();
+    expect(screen.getByText('80')).toBeInTheDocument();
+    expect(screen.getByText('図書館')).toBeInTheDocument();
+    expect(screen.getByText('75%')).toBeInTheDocument();
+    expect(screen.getByText('ショットガン')).toBeInTheDocument();
+    expect(screen.getByText('4d6')).toBeInTheDocument();
     expect(screen.getByText('懐中電灯')).toBeInTheDocument();
     expect(screen.getByText('テスト履歴')).toBeInTheDocument();
     expect(screen.getByText('テスト信念')).toBeInTheDocument();
