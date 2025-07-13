@@ -35,7 +35,6 @@ export const parseCharacterSheet = (text) => {
         injuries: charData.injuries || '',
         weapons: charData.weapons || [],
         equipment: charData.equipment || '',
-        imageUrl: charData.imageUrl || '', // Add imageUrl
       };
 
       if (charData.params) {
@@ -96,7 +95,6 @@ export const parseCharacterSheet = (text) => {
     injuries: '',
     weapons: [],
     equipment: '',
-    imageUrl: '', // Add imageUrl
   };
 
   const nameMatch = text.match(/(?:キャラクター名|名前)\s*[:：]\s*(.+)/);
@@ -174,9 +172,6 @@ export const parseCharacterSheet = (text) => {
 
   const equipmentMatch = text.match(/所持品\s*[:：]([\s\S]+?)$/);
   if (equipmentMatch) data.equipment = equipmentMatch[1].trim();
-
-  const imageUrlMatch = text.match(/(?:画像URL|キャラクター画像)\s*[:：]\s*(.+)/);
-  if (imageUrlMatch) data.imageUrl = imageUrlMatch[1].trim();
 
   if (!data.name) {
     throw new Error('キャラクター名が見つかりません。テキスト形式を確認してください。');

@@ -10,11 +10,13 @@ import './App.css';
 const App = () => {
   const {
     rawText,
+    characterImageUrl,
     parsedData,
     imageUrl,
     isLoading,
     error,
     handleTextChange,
+    handleCharacterImageUrlChange,
     generateImage,
     handleDownload,
   } = useCharacterSheetGenerator();
@@ -30,6 +32,8 @@ const App = () => {
         <InputArea
           rawText={rawText}
           onTextChange={handleTextChange}
+          characterImageUrl={characterImageUrl}
+          onCharacterImageUrlChange={handleCharacterImageUrlChange}
           onGenerateClick={() => generateImage(SHEET_ELEMENT_ID)}
           isLoading={isLoading}
         />

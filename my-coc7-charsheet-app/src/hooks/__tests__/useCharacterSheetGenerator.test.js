@@ -20,6 +20,7 @@ describe('useCharacterSheetGenerator', () => {
     const { result } = renderHook(() => useCharacterSheetGenerator());
 
     expect(result.current.rawText).toBe('');
+    expect(result.current.characterImageUrl).toBe(''); // New assertion
     expect(result.current.parsedData).toBeNull();
     expect(result.current.imageUrl).toBe('');
     expect(result.current.isLoading).toBe(false);
@@ -36,12 +37,23 @@ describe('useCharacterSheetGenerator', () => {
     expect(result.current.rawText).toBe('new text');
   });
 
+  it('should update characterImageUrl when handleCharacterImageUrlChange is called', () => {
+    const { result } = renderHook(() => useCharacterSheetGenerator());
+
+    act(() => {
+      result.current.handleCharacterImageUrlChange({ target: { value: 'http://example.com/char.png' } });
+    });
+
+    expect(result.current.characterImageUrl).toBe('http://example.com/char.png');
+  });
+
   it('should handle successful image generation', async () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useCharacterSheetGenerator());
     const mockParsedData = { name: 'Test Character' };
     const mockCanvas = document.createElement('canvas');
     const mockDataUrl = 'data:image/png;base64,test';
+    const mockCharacterImageUrl = 'http://example.com/char.png';
     
     // モックの設定
     parseCharacterSheet.mockReturnValue(mockParsedData);
@@ -53,9 +65,10 @@ describe('useCharacterSheetGenerator', () => {
     element.id = 'test-id';
     document.body.appendChild(element);
 
-    // テキストを設定
+    // テキストと画像URLを設定
     act(() => {
       result.current.handleTextChange({ target: { value: 'character sheet text' } });
+      result.current.handleCharacterImageUrlChange({ target: { value: mockCharacterImageUrl } });
     });
 
     // 画像生成を実行
@@ -68,7 +81,7 @@ describe('useCharacterSheetGenerator', () => {
     
     // パースが呼ばれることを確認
     expect(parseCharacterSheet).toHaveBeenCalledWith('character sheet text');
-    expect(result.current.parsedData).toEqual(mockParsedData);
+    expect(result.current.parsedData).toEqual({ ...mockParsedData, imageUrl: mockCharacterImageUrl }); // Updated assertion
 
     // setTimeout内の非同期処理を進める
     await act(async () => {
@@ -77,7 +90,7 @@ describe('useCharacterSheetGenerator', () => {
 
     // html2canvasが呼ばれ、imageUrlが設定されることを確認
     expect(html2canvas).toHaveBeenCalledWith(element);
-    expect(result.current.imageUrl).toBe(mockDataUrl);
+    expect(result.current.imageUrl).toBe(mockDataUrl); // This is the generated image, not the character image
     
     // isLoadingがfalseに戻ることを確認
     expect(result.current.isLoading).toBe(false);
@@ -106,6 +119,7 @@ describe('useCharacterSheetGenerator', () => {
     expect(result.current.isLoading).toBe(false);
     expect(result.current.imageUrl).toBe('');
     expect(result.current.parsedData).toBeNull();
+    expect(result.current.characterImageUrl).toBe(''); // New assertion
   });
 
   it('should handle download correctly', () => {

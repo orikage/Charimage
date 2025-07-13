@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputArea = ({ rawText, onTextChange, onGenerateClick, isLoading }) => (
+const InputArea = ({ rawText, onTextChange, characterImageUrl, onCharacterImageUrlChange, onGenerateClick, isLoading }) => (
   <div className="input-area">
     <h2>キャラクターシートのテキストを貼り付け</h2>
     <textarea
@@ -8,6 +8,14 @@ const InputArea = ({ rawText, onTextChange, onGenerateClick, isLoading }) => (
       onChange={onTextChange}
       placeholder="ここにCoC7版のキャラクターシートのテキストを貼り付けてください..."
       rows={15}
+      disabled={isLoading}
+    />
+    <h2>キャラクター画像URL (任意)</h2>
+    <input
+      type="text"
+      value={characterImageUrl}
+      onChange={onCharacterImageUrlChange}
+      placeholder="ここにキャラクター画像のURLを貼り付けてください (例: http://example.com/image.png)"
       disabled={isLoading}
     />
     <button onClick={onGenerateClick} disabled={isLoading || !rawText.trim()}>

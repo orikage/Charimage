@@ -5,6 +5,7 @@ import { downloadImage } from '../utils/imageDownloader';
 
 export const useCharacterSheetGenerator = () => {
   const [rawText, setRawText] = useState('');
+  const [characterImageUrl, setCharacterImageUrl] = useState(''); // New state for character image URL
   const [parsedData, setParsedData] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -12,6 +13,10 @@ export const useCharacterSheetGenerator = () => {
 
   const handleTextChange = (e) => {
     setRawText(e.target.value);
+  };
+
+  const handleCharacterImageUrlChange = (e) => {
+    setCharacterImageUrl(e.target.value);
   };
 
   const generateImage = async (elementId) => {
@@ -23,6 +28,10 @@ export const useCharacterSheetGenerator = () => {
     try {
       // 1. テキストを解析
       const data = parseCharacterSheet(rawText);
+      // Add characterImageUrl to parsedData if it exists
+      if (characterImageUrl) {
+        data.imageUrl = characterImageUrl;
+      }
       setParsedData(data);
 
       // 2. 少し待ってからDOM要素を取得して画像化
@@ -42,11 +51,6 @@ export const useCharacterSheetGenerator = () => {
         }
       }, 100); // データがDOMに反映されるのを少し待つ
 
-      // キャラクター画像URLをセット
-      if (data.imageUrl) {
-        setImageUrl(data.imageUrl);
-      }
-
     } catch (err) {
       setError(err.message || '不明なエラーが発生しました。');
       setIsLoading(false);
@@ -61,14 +65,15 @@ export const useCharacterSheetGenerator = () => {
 
   return {
     rawText,
+    characterImageUrl, // Expose new state
     parsedData,
     imageUrl,
     isLoading,
     error,
     handleTextChange,
+    handleCharacterImageUrlChange, // Expose new handler
     generateImage,
     handleDownload,
     setImageUrl, // For testing
     setParsedData, // For testing
   };
-};

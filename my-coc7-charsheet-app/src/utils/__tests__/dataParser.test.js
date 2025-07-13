@@ -146,33 +146,4 @@ describe('parseCharacterSheet', () => {
     };
     expect(parseCharacterSheet(invalidJsonText)).toEqual(expected);
   });
-
-  it('should correctly parse image URL from text', () => {
-    const text = `
-      キャラクター名：画像テスト
-      画像URL: https://example.com/image.png
-    `;
-    const expected = {
-      ...baseExpected,
-      name: '画像テスト',
-      plName: '',
-      attributes: {},
-      skills: [],
-      imageUrl: 'https://example.com/image.png',
-    };
-    expect(parseCharacterSheet(text)).toEqual(expected);
-  });
-
-  it('should correctly parse image URL from JSON', () => {
-    const jsonText = `{"kind":"character","data":{"name":"JSON画像テスト","imageUrl":"https://example.com/json_image.jpg"}}`;
-    const expected = {
-      ...baseExpected,
-      name: 'JSON画像テスト',
-      plName: '',
-      attributes: {},
-      skills: [],
-      imageUrl: 'https://example.com/json_image.jpg',
-    };
-    expect(parseCharacterSheet(jsonText)).toEqual(expected);
-  });
 });
