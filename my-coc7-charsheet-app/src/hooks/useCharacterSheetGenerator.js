@@ -36,11 +36,16 @@ export const useCharacterSheetGenerator = () => {
           const url = canvas.toDataURL('image/png');
           setImageUrl(url);
         } catch (err) {
-          setError(err.message || '画像生成中にエラーが発生しました。');
+          setError(err.message || '画像生成中にエラーが発生しました。' + (err.message ? ': ' + err.message : ''));
         } finally {
           setIsLoading(false);
         }
       }, 100); // データがDOMに反映されるのを少し待つ
+
+      // キャラクター画像URLをセット
+      if (data.imageUrl) {
+        setImageUrl(data.imageUrl);
+      }
 
     } catch (err) {
       setError(err.message || '不明なエラーが発生しました。');

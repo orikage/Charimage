@@ -176,3 +176,16 @@
   color: #007bff;
   font-weight: bold;
 }
+
+.character-image-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.character-image {
+  max-width: 200px; /* 画像の最大幅 */
+  height: auto;
+  border: 3px solid #8b0000;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

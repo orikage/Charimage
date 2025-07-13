@@ -21,6 +21,11 @@ const CharacterSheetDisplay = ({ data, elementId }) => {
   return (
     <div id={elementId} className="character-sheet-display" data-testid="character-sheet-display">
       <CharacterInfoSection name={data.name} plName={data.plName} />
+      {data.imageUrl && (
+        <div className="character-image-container">
+          <img src={data.imageUrl} alt="キャラクター画像" className="character-image" />
+        </div>
+      )}
       <OccupationSection occupation={data.occupation} />
       <AttributesSection attributes={data.attributes} />
       <SkillsSection skills={data.skills} />
