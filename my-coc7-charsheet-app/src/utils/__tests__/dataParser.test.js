@@ -107,13 +107,23 @@ describe('parseCharacterSheet', () => {
   });
 
   it('should correctly parse JSON character information', () => {
-    const jsonText = `{"kind":"character","data":{"name":"天乃 天(アマノ アメ)","plName":"テストPL"}}`;
+    const jsonText = `{"kind":"character","data":{"name":"天乃 天(アマノ アメ)","plName":"テストPL","occupation":"学生","backstory":"過去の出来事","beliefs":"真実の探求","significantPeople":"家族","meaningfulLocations":"古い図書館","treasuredPossessions":"懐中時計","traits":"好奇心旺盛","insanity":"なし","injuries":"なし","weapons":[{"name":"ナイフ","damage":"1d4"}],"equipment":"リュックサック"}}`;
     const expected = {
-      ...baseExpected,
       name: '天乃 天(アマノ アメ)',
       plName: 'テストPL',
+      occupation: '学生',
       attributes: {},
       skills: [],
+      backstory: '過去の出来事',
+      beliefs: '真実の探求',
+      significantPeople: '家族',
+      meaningfulLocations: '古い図書館',
+      treasuredPossessions: '懐中時計',
+      traits: '好奇心旺盛',
+      insanity: 'なし',
+      injuries: 'なし',
+      weapons: [{ name: 'ナイフ', damage: '1d4' }],
+      equipment: 'リュックサック',
     };
     expect(parseCharacterSheet(jsonText)).toEqual(expected);
   });

@@ -13,6 +13,7 @@ import TraitsSection from './sections/TraitsSection';
 import InsanitySection from './sections/InsanitySection';
 import InjuriesSection from './sections/InjuriesSection';
 import WeaponsSection from './sections/WeaponsSection';
+import './CharacterSheetDisplay.css'; // Import the CSS file
 
 const CharacterSheetDisplay = ({ data, elementId }) => {
   if (!data) return null;
@@ -33,26 +34,6 @@ const CharacterSheetDisplay = ({ data, elementId }) => {
       <TraitsSection traits={data.traits} />
       <InsanitySection insanity={data.insanity} />
       <InjuriesSection injuries={data.injuries} />
-      <style>{`
-        .character-sheet-display {
-          border: 1px solid #000;
-          padding: 20px;
-          width: 800px; /* A4比率に近い幅 */
-          background-color: white;
-          font-family: 'Helvetica', 'Arial', sans-serif;
-        }
-        .character-sheet-display h1, .character-sheet-display h2 {
-          border-bottom: 2px solid #000;
-          padding-bottom: 5px;
-        }
-        .character-sheet-display ul {
-          list-style: none;
-          padding: 0;
-        }
-        .character-sheet-display li {
-          padding: 2px 0;
-        }
-      `}</style>
     </div>
   );
 };

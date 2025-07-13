@@ -4,6 +4,16 @@
  * @returns {object} - 解析されたキャラクターデータオブジェクト。
  */
 export const parseCharacterSheet = (text) => {
+  // 技能カテゴリの定義とキーワード
+  const skillCategories = {
+    '器術': ['絡操術', '火術', '水術', '針術', '仕込み', '衣装術', '縄術', '登術', '拷問術', '壊器術', '掘削術'],
+    '体術': ['騎乗術', '砲術', '手裏剣術', '手練', '身体操術', '歩法', '走法', '飛術', '骨法術', '刀術', '怪力'],
+    '忍術': ['生存術', '潜伏術', '遁走術', '盗聴術', '腹話術', '隠形術', '変装術', '香術', '分身の術', '隠蔽術', '第六感'],
+    '謀術': ['医術', '毒術', '罠術', '調査術', '詐術', '対人術', '遊芸', 'くノーの術', '傀儡の術', '流言の術', '経済力'],
+    '戦術': ['兵糧術', '鳥獸術', '野戦術', '地の利', '意気', '用兵術', '記憶術', '見敵術', '暗号術', '伝達術', '人脈'],
+    '妖術': ['異形化', '召喚術', '死霊術', '結界術', '封術', '言霊術', '幻術', '瞳術', '千里眼の術', '憑依術', '呪術'],
+  };
+
   try {
     const parsedData = JSON.parse(text);
     // If JSON parsing succeeds, process as JSON
@@ -23,7 +33,7 @@ export const parseCharacterSheet = (text) => {
         traits: charData.traits || '',
         insanity: charData.insanity || '',
         injuries: charData.injuries || '',
-        weapons: [],
+        weapons: charData.weapons || [],
         equipment: charData.equipment || '',
       };
 
@@ -31,6 +41,22 @@ export const parseCharacterSheet = (text) => {
         charData.params.forEach(param => {
           if (['STR', 'CON', 'POW', 'DEX', 'APP', 'SIZ', 'INT', 'EDU'].includes(param.label)) {
             data.attributes[param.label] = parseInt(param.value, 10);
+          }
+        });
+      }
+
+      if (charData.skills) {
+        charData.skills.forEach(skill => {
+          let categoryFound = false;
+          for (const category in skillCategories) {
+            if (skillCategories[category].includes(skill.label)) {
+              data.skills.push({ name: skill.label, value: skill.value, category: category });
+              categoryFound = true;
+              break;
+            }
+          }
+          if (!categoryFound) {
+            data.skills.push({ name: skill.label, value: skill.value, category: 'その他' });
           }
         });
       }
@@ -96,7 +122,17 @@ export const parseCharacterSheet = (text) => {
       for (const match of skillMatches) {
           const skillName = match[1].trim();
           if (skillName && !skillName.match(/^[A-Z]{3}$/)) {
-            data.skills.push({ name: skillName, value: parseInt(match[2], 10) });
+            let categoryFound = false;
+            for (const category in skillCategories) {
+              if (skillCategories[category].includes(skillName)) {
+                data.skills.push({ name: skillName, value: parseInt(match[2], 10), category: category });
+                categoryFound = true;
+                break;
+              }
+            }
+            if (!categoryFound) {
+              data.skills.push({ name: skillName, value: parseInt(match[2], 10), category: 'その他' });
+            }
           }
       }
   }

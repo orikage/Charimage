@@ -5,7 +5,7 @@ const AttributesSection = ({ attributes }) => (
     <h2>能力値</h2>
     <ul>
       {Object.entries(attributes).map(([key, value]) => (
-        <li key={key}>{key}: {value}</li>
+        <li key={key}><span>{key}</span>: <span>{value}</span></li>
       ))}
     </ul>
   </div>

@@ -1,0 +1,178 @@
+/* my-coc7-charsheet-app/src/components/CharacterSheetDisplay.css */
+
+.character-sheet-display {
+  border: 1px solid #000;
+  padding: 20px;
+  width: 800px; /* A4比率に近い幅 */
+  background-color: #f8f8f8; /* やや明るい背景色 */
+  font-family: 'BIZ UDGothic', 'Yu Gothic', 'Meiryo', sans-serif; /* 日本語フォントを優先 */
+  color: #333;
+  line-height: 1.5;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* より強い影 */
+  position: relative; /* For absolute positioning of elements */
+  overflow: hidden; /* Ensure no overflow */
+}
+
+.character-sheet-display h1 {
+  font-size: 2.8em; /* 大きめのフォントサイズ */
+  text-align: center;
+  margin-bottom: 20px;
+  color: #8b0000; /* 濃い赤色 */
+  text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+  border-bottom: none; /* h1のborder-bottomを削除 */
+  padding-bottom: 0;
+}
+
+.character-sheet-display h2 {
+  font-size: 1.8em; /* 大きめのフォントサイズ */
+  border-bottom: 3px solid #8b0000; /* 濃い赤色の太い下線 */
+  padding-bottom: 8px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  color: #8b0000;
+  text-align: center; /* 中央揃え */
+}
+
+.character-sheet-display ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.character-sheet-display li {
+  padding: 6px 0;
+  border-bottom: 1px dotted #ccc;
+}
+
+.character-sheet-display li:last-child {
+  border-bottom: none;
+}
+
+/* 各セクションの共通スタイル */
+.character-info-section,
+.occupation-section,
+.attributes-section,
+.skills-section,
+.weapons-section,
+.equipment-section,
+.backstory-section,
+.beliefs-section,
+.significant-people-section,
+.meaningful-locations-section,
+.treasured-possessions-section,
+.traits-section,
+.insanity-section,
+.injuries-section {
+  margin-bottom: 25px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ffffff; /* 白い背景 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.attributes-section ul,
+.weapons-section ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* 列幅を調整 */
+  gap: 15px;
+}
+
+.attributes-section li,
+.weapons-section li {
+  background-color: #f0f0f0; /* やや濃い背景 */
+  border: 1px solid #bbb;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1em;
+}
+
+.attributes-section li span:first-child,
+.weapons-section li span:first-child {
+  font-weight: bold;
+  color: #444;
+}
+
+.attributes-section li span:last-child,
+.weapons-section li span:last-child {
+  color: #0056b3; /* 濃い青色 */
+  font-weight: bold;
+}
+
+.character-info-section p {
+  text-align: center;
+  font-size: 1.2em;
+  margin-top: -15px;
+  color: #555;
+  font-weight: bold;
+}
+
+.occupation-section p,
+.equipment-section p,
+.backstory-section p,
+.beliefs-section p,
+.significant-people-section p,
+.meaningful-locations-section p,
+.treasured-possessions-section p,
+.traits-section p,
+.insanity-section p,
+.injuries-section p {
+  white-space: pre-wrap; /* 改行を保持 */
+  word-wrap: break-word; /* 長い単語の折り返し */
+  font-size: 1.05em;
+  color: #444;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 列幅を調整 */
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.skill-category {
+  border: 2px solid #8b0000; /* 濃い赤色の枠線 */
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #fff0f0; /* 薄い赤色の背景 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.skill-category h3 {
+  font-size: 1.4em;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #8b0000; /* 濃い赤色の下線 */
+  color: #8b0000;
+  font-weight: bold;
+}
+
+.skill-category ul {
+  padding-left: 0; /* リストのインデントを削除 */
+}
+
+.skill-category li {
+  border-bottom: 1px dashed #e0e0e0; /* 点線に変更 */
+  padding: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1em;
+}
+
+.skill-category li:last-child {
+  border-bottom: none;
+}
+
+.skill-category li span:first-child {
+  color: #333;
+}
+
+.skill-category li span:last-child {
+  color: #007bff;
+  font-weight: bold;
+}
