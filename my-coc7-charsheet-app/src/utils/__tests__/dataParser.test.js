@@ -14,7 +14,6 @@ describe('parseCharacterSheet', () => {
     traits: '',
     treasuredPossessions: '',
     weapons: [],
-    imageUrl: '',
   };
 
   it('should correctly parse basic character information from text', () => {
@@ -125,7 +124,6 @@ describe('parseCharacterSheet', () => {
       injuries: 'なし',
       weapons: [{ name: 'ナイフ', damage: '1d4' }],
       equipment: 'リュックサック',
-      imageUrl: '',
     };
     expect(parseCharacterSheet(jsonText)).toEqual(expected);
   });
