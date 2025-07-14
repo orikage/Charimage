@@ -41,7 +41,7 @@ export const useCharacterSheetGenerator = () => {
           if (!element) {
             throw new Error('画像化対象の要素が見つかりません。');
           }
-          const canvas = await html2canvas(element);
+          const canvas = await html2canvas(element, { useCORS: true });
           const url = canvas.toDataURL('image/png');
           setImageUrl(url);
         } catch (err) {

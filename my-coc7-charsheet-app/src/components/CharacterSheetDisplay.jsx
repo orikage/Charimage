@@ -23,7 +23,7 @@ const CharacterSheetDisplay = ({ data, elementId }) => {
       <CharacterInfoSection name={data.name} plName={data.plName} />
       {data.imageUrl && (
         <div className="character-image-container">
-          <img src={data.imageUrl} alt="キャラクター画像" className="character-image" />
+          <img src={data.imageUrl} alt="キャラクター画像" className="character-image" crossOrigin="anonymous" />
         </div>
       )}
       <OccupationSection occupation={data.occupation} />

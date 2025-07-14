@@ -53,4 +53,16 @@ describe('<CharacterSheetDisplay />', () => {
     expect(screen.getByText('テスト狂気')).toBeInTheDocument();
     expect(screen.getByText('テスト負傷')).toBeInTheDocument();
   });
+
+  it('should render image with crossOrigin attribute when imageUrl is provided', () => {
+    const dataWithImage = {
+      ...mockData,
+      imageUrl: 'https://example.com/image.png',
+    };
+    render(<CharacterSheetDisplay data={dataWithImage} />);
+    const image = screen.getByAltText('キャラクター画像');
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute('src', dataWithImage.imageUrl);
+    expect(image).toHaveAttribute('crossOrigin', 'anonymous');
+  });
 });

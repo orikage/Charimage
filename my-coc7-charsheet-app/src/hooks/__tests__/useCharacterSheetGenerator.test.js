@@ -89,7 +89,7 @@ describe('useCharacterSheetGenerator', () => {
     });
 
     // html2canvasが呼ばれ、imageUrlが設定されることを確認
-    expect(html2canvas).toHaveBeenCalledWith(element);
+    expect(html2canvas).toHaveBeenCalledWith(element, { useCORS: true });
     expect(result.current.imageUrl).toBe(mockDataUrl); // This is the generated image, not the character image
     
     // isLoadingがfalseに戻ることを確認
